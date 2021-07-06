@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+let secret = (process.env.SECRET||'somthing');
 
 const users = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
@@ -55,7 +56,7 @@ users.statics.authenticateBasic = async function (username, password) {
 // BEARER AUTH
 users.statics.authenticateWithToken = async function (token) {
   try {
-    const parsedToken = jwt.verify(token, process.env.SECRET);
+    const parsedToken = jwt.verify(token, secret);
     const user = this.findOne({ username: parsedToken.username })
     if (user) { return user; }
     throw new Error("User Not Found");
