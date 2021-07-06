@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 let secret = (process.env.SECRET||'somthing');
 
 const users = new mongoose.Schema({
